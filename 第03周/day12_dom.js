@@ -20,6 +20,7 @@ var button = document.createElement('button');
 button.textContent = '登录';
 button.onclick = () => {
 	tr = table.appendChild(document.createElement('tr'));
+	tablerows();
 	tr.appendChild(document.createElement('td')).innerText = input1.value;
 	tr.appendChild(document.createElement('td')).innerText = input2.value;
 	var td = document.createElement('td');
@@ -36,6 +37,7 @@ button.onclick = () => {
 	}
 	a2.onclick = () => {
 		table.removeChild(a2.parentNode.parentNode);
+		tablerows();
 		return false;
 	}
 	td.appendChild(a1);
@@ -49,7 +51,7 @@ for (var i = 0; i < 3; i++) {
 	tr.appendChild(document.createElement('th')).textContent = arr[i];
 }
 table.appendChild(tr);
-table.style = 'margin:0 auto';
+table.style = 'margin:0 auto;';
 document.body.style = 'text-align:center';
 document.body.appendChild(input1);
 document.body.appendChild(document.createElement('br'));
@@ -57,3 +59,9 @@ document.body.appendChild(input2);
 document.body.appendChild(document.createElement('hr'));
 document.body.appendChild(button);
 document.body.appendChild(table);
+// 表格隔行变换颜色。
+(tablerows = () => {
+	Array.from(table.children).forEach((value, key, arr) => {
+		key % 2 == 0 ? value.style = 'background-color:#fff' : value.style = 'background-color:#ebebec';
+	});
+})();
