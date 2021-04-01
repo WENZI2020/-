@@ -10,7 +10,7 @@
 2. 然后获取tr的子节点
 3. 获取name 和age输入框的值
 4. 然后修改tr子节点的下标为0的文本值为name的值 下标为1的值为age的值 */
-/* 注销:
+/* 登出:
 	1. 获取删除按钮的当前对象， 然后获取当前对象的父节点td 然后在获取父节点tr
 2. 获取table节点
 3. 调用table节点删除 tr节点 */
@@ -26,7 +26,7 @@ button.onclick = () => {
 	var a1 = document.createElement('a');
 	var a2 = document.createElement('a');
 	a1.textContent = '更换';
-	a2.textContent = '注销';
+	a2.textContent = '登出';
 	a1.href = '#';
 	a2.href = '#';
 	a1.onclick = () => {
