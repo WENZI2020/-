@@ -76,3 +76,16 @@ select1.onchange = () => {
 select2.onchange = () => {
 	select3f(select1.selectedIndex, select2.selectedIndex);
 }
+
+var sum = '';
+$.each(data, (i, v1) => {
+	sum += v1.name + '\t';
+	$.each(v1.list, (i, v2) => {
+		sum += v2.name;
+		$.each(v2.list, (i, v3) => {
+			sum += v3;
+		});
+	});
+	sum += '\n';
+});
+console.log(sum);

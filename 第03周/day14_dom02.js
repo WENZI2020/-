@@ -1,12 +1,12 @@
 // 轮播图动态切换。
 var btn = document.createElement('button');
-btn.textContent = '■';
+btn.innerText = '■';
 btn.onclick = () => {
-	if (btn.innerText == '▽') {
-		btn.textContent = '■';
+	if (btn.textContent == '▽') {
+		btn.innerText = '■';
 		interval = window.setInterval(func, 1000);
 	} else {
-		btn.textContent = '▽';
+		btn.innerText = '▽';
 		window.clearInterval(interval);
 	}
 }
@@ -26,17 +26,17 @@ var interval = window.setInterval(func = () => {
 // 表单获取验证码。
 var input = document.createElement('input');
 var btns = document.createElement('button');
-btns.textContent = '获取验证码';
+btns.innerHTML = '获取验证码';
 var is = 30;
 btns.onclick = () => {
 	var intervals = window.setInterval(() => {
 		if (is < 0) {
-			btns.textContent = '获取验证码';
+			btns.innerText = '获取验证码';
 			btns.disabled = false;
 			window.clearInterval(intervals);
 			is = 30;
 		} else {
-			btns.innerHTML = `重发送 ${is}s`;
+			btns.innerText = `重发送 ${is}s`;
 			btns.disabled = true;
 			is -= 1;
 		}
