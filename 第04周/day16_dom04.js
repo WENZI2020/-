@@ -59,8 +59,8 @@ var select2f = (index) => {
 }
 select2f(0);
 var select3f = (index1, index2) => {
-	for (i in select3.children) {
-		select3.remove(i);
+	for (v of select3.children) {
+		select3.removeChild(v);
 	}
 	data[index1].list[index2].list.forEach((value, key, arr) => {
 		var option = document.createElement('option');
