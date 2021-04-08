@@ -11,7 +11,7 @@ btn.onclick = () => {
 	}
 }
 var div = document.createElement('div');
-var div1 = ['第1张', '第2张', '第3张'];
+var div1 = ['第一张', '第二张', '第三张'];
 div.innerText = div1[0];
 div.style = 'width:100px;height:100px;text-align:center;border:solid;';
 document.body.appendChild(btn);
