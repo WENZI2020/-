@@ -3,52 +3,112 @@
 var price = [12, 21, 34, 43, 78, 87, 56, 65];
 for (var i = 0; i < 8; i++) {
 	var i1 = i + 1;
-	var tr = document.createElement('tr');
-	tr.appendChild(document.createElement('td'));
-	document.querySelector('.shopping').appendChild(tr);
+	document.querySelector('.shopping').children[0].appendChild(document.createElement('tr')).id='one'+i1;
+	document.querySelector('#one'+i1).appendChild(document.createElement('td'));
 	var input=document.createElement('input');
 	input.type='checkbox';
 	input.onchange=()=>{
 		allSum();
 	}
-	var id=document.createElement('span').innerText=i1+'.';
-	var img=document.createElement('img').src='#';
-	var name=document.createElement('span').innerText='商品';
-	var price1=document.createElement('span').className='p1';
+	var id=document.createElement('span');
+	id.innerText=i1+'.';
+	var img=document.createElement('img');
+	img.src='#';
+	let name=document.createElement('span');
+	name.innerText='商品';
+	var price1=document.createElement('span');
+	price1.className='p1';
 	price1.innerText=` ￥${price[i]} `;
-	var input1=document.createElement('input').value='-';
+	let input1=document.createElement('input');
 	input1.type='button';
+	input1.value='-';
 	input1.onclick=()=>{
-		
+		var num = input1.nextSibling;
+		if (num.value >= 2) {
+			num.value = parseInt(num.value) - 1;
+		} else {
+			num.value = 1;
+		}
+		oneSum(e);
+		allSum();
 	}
-	var input2=document.createElement('input').value='1';
+	let input2=document.createElement('input');
 	input2.type='number';
+	input2.value='1';
 	input2.oninput=()=>{
-		
+		input2.value = Number(input2.value.replace(/[\+\.-]/g, ''));
+		input2.value === '0' ? input2.value = 1 : '';
+		oneSum(e);
+		allSum();
 	}
-	var input3=document.createElement('input').value='+';
+	let input3=document.createElement('input');
 	input3.type='button';
+	input3.value='+';
 	input3.onclick=()=>{
-		
+		var num = input3.previousSibling;
+		num.value = parseInt(num.value) + 1;
+		oneSum(e);
+		allSum();
 	}
-	var price2=document.createElement('span').className='p2';
+	var price2=document.createElement('span');
+	price2.className='p2';
 	price2.innerText=` ￥${price[i]} `;
-	var del=document.createElement('a').innerText='删除';
+	let del=document.createElement('a');
 	del.href="#";
+	del.innerText='删除';
 	del.onclick=()=>{
-		
+		document.querySelector('.shopping').children[0].removeChild(del.parentElement.parentElement);
+		allSum();
+		return false;
 	}
-	tr.children[0].appendChild(input);
-	tr.children[0].appendChild(id);
-	tr.children[0].appendChild(img);
-	tr.children[0].appendChild(name);
-	tr.children[0].appendChild(price1);
-	tr.children[0].appendChild(input1);
-	tr.children[0].appendChild(input2);
-	tr.children[0].appendChild(input3);
-	tr.children[0].appendChild(price2);
-	tr.children[0].appendChild(del);
+	let el=[input, id, img, name, price1, input1, input2, input3, price2, del];
+	el.forEach((value,key,arr)=>{
+		document.querySelector('#one'+i1).children[0].appendChild(value);
+	});
 }
+document.querySelector('#all').children[0].children[0].onclick=()=>{
+	for( v of document.querySelector('.shopping').children[0].children){
+		v.children[0].checked=true;
+	}
+}
+document.querySelector('#all').children[0].children[1].onclick=()=>{
+	
+}
+
+
+
+    $('#all').find('button:eq(0)').on('click', () => {
+		$('#all').nextAll('tr').find('[type=checkbox]').prop({
+			'checked': true
+		});
+		allSum();
+	});
+	$('#all').find('button:eq(1)').on('click', () => {
+		var check = $('#all').nextAll('tr').find('[type=checkbox]');
+		check.each((key, value) => {
+			$(value).prop({
+				'checked': !$(value).prop('checked')
+			});
+		});
+		allSum();
+	});
+	var oneSum = (e) => {
+		var p1 = $(e.target).siblings('.p1');
+		var num = $(e.target).parent('td').children('[type=number]');
+		var p2 = $(e.target).siblings('.p2');
+		p2.text(` ￥${p1.text().slice(2, -1)*num.val()} `);
+	}
+	var allSum = () => {
+		var check = $('#all').nextAll('tr').find('[type=checkbox]');
+		var sum = 0;
+		check.each((key, value) => {
+			if ($(value).prop('checked')) {
+				var p2 = $(value).siblings('.p2');
+				sum += p2.text().slice(2, -1) - 0;
+			}
+		});
+		$('#all').find('span').html(`合计 ￥${sum}&nbsp;`);
+	}
 		
 		
 		
