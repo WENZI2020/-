@@ -100,3 +100,64 @@ var allSum = () => {
 	}
 	all.children[0].children[3].innerHTML = `合计 ￥${sum}&nbsp;`;
 }
+// 编写轮播图特效。
+// 轮播图动态切换。
+var inner = document.querySelector('.inner');
+inner.style.left = '0px';
+document.querySelector('.carousel').onmouseover = () => {
+	window.clearInterval(interval);
+}
+document.querySelector('.carousel').onmouseout = () => {
+	interval = window.setInterval(func, 4);
+}
+document.querySelector('.control-prev').onclick = (e) => {
+	e.target.style.opacity = 1;
+	if (parseInt(inner.style.left) >= 0) {
+		inner.style.left = '-3000px';
+	} else {
+		inner.style.left = parseInt(inner.style.left) + 1000 + 'px';
+	}
+	window.setTimeout(() => {
+		e.target.style.opacity = 0.5;
+	}, 1000);
+}
+document.querySelector('.control-next').onclick = (e) => {
+	e.target.style.opacity = 1;
+	if (parseInt(inner.style.left) <= -3000) {
+		inner.style.left = '0px';
+	} else {
+		inner.style.left = parseInt(inner.style.left) - 1000 + 'px';
+	}
+	window.setTimeout(() => {
+		e.target.style.opacity = 0.5;
+	}, 1000);
+}
+var indicators = document.querySelector('.indicators').children;
+Array.from(indicators).forEach((value, key, arr) => {
+	value.onclick = (e) => {
+		e.target.style.opacity = 1;
+		inner.style.left = '-' + key + '000px';
+		window.setTimeout(() => {
+			e.target.style.opacity = 0.5;
+		}, 1000);
+	}
+});
+var divs = [
+	['第一张', 'https://static.runoob.com/images/mix/img_fjords_wide.jpg'],
+	['第二张', 'https://static.runoob.com/images/mix/img_nature_wide.jpg'],
+	['第三张', 'https://static.runoob.com/images/mix/img_mountains_wide.jpg'],
+	['第一张', 'https://static.runoob.com/images/mix/img_fjords_wide.jpg']
+];
+for (var i = 0; i < 4; i++) {
+	var diva = inner.children[i];
+	diva.innerText = divs[i][0];
+	diva.style.background = 'url(' + divs[i][1] + ') #888';
+	diva.style.backgroundSize = 'cover';
+}
+var interval = window.setInterval(func = () => {
+	if (parseInt(inner.style.left) <= -3000) {
+		inner.style.left = '0px';
+	} else {
+		inner.style.left = parseInt(inner.style.left) - 2 + 'px';
+	}
+}, 4);
