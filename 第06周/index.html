@@ -1,0 +1,58 @@
+<!DOCTYPE html><!-- 告诉浏览器，这个文档请以HTML的方式来解析 -->
+<html lang="zh-CN">
+	<!-- HTML文件的根标签 -->
+	<head>
+		<!-- HTML的头标签，头标签主要负责设置一些内容 -->
+		<!-- meta标签 自动刷新页面，或者自动跳转页面 -->
+		<link rel="icon" href="" /><!-- logo图标 -->
+		<meta name="keywords" content="标题" /><!-- 关键词 -->
+		<meta name="description" content="详情" /><!-- 描述信息，会出现在搜索页面 -->
+		<meta name="viewport" content="" /><!-- 响应式视图端口 -->
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" /><!-- 浏览器兼容性 -->
+		<meta charset="utf-8" /><!-- 设置页面的字符编码 -->
+		<base /><!-- 整体链接状态 -->
+		<title></title><!-- 设置页面的标题名称 -->
+	</head>
+	<body style="padding: 15px;">
+		<!-- 添加图书的Panel面板 -->
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">图书管理后台</h3>
+			</div>
+			<div class="panel-body form-inline">
+				<div class="input-group">
+					<div class="input-group-addon">书名</div>
+					<input type="text" class="form-control" id="iptBookname" placeholder="请输入书名">
+				</div>
+				<div class="input-group">
+					<div class="input-group-addon">作者</div>
+					<input type="text" class="form-control" id="iptAuthor" placeholder="请输入作者">
+				</div>
+				<div class="input-group">
+					<div class="input-group-addon">出版社</div>
+					<input type="text" class="form-control" id="iptPublisher" placeholder="请输入出版社">
+				</div>
+				<button id="btnAdd" class="btn btn-primary">添加</button>
+			</div>
+		</div>
+		<!-- 图书的表格 -->
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>编号</th>
+					<th>书名</th>
+					<th>作者</th>
+					<th>出版社</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody id="tb"></tbody>
+		</table>
+		<!-- 外部叠层样式表 -->
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<!-- 外部脚本与类库 -->
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="./js/index.js"></script>
+	</body>
+</html>
