@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+	</head>
+	<body>
+		<style>
+			html,
+			body {
+				padding: 0;
+				margin: 0 auto;
+				width: 100%;
+			}
+
+			* {
+				padding: 0;
+				margin: 0;
+				vertical-align: bottom;
+				list-style: none;
+			}
+
+			.box {
+				width: 600px;
+				margin: 100px auto;
+				border: 1px solid #000;
+				padding: 20px;
+			}
+
+			textarea {
+				width: 450px;
+				height: 160px;
+				outline: none;
+				resize: none;
+			}
+
+			ul {
+				width: 450px;
+				padding-left: 53px;
+			}
+
+			ul>li {
+				line-height: 25px;
+				border-bottom: 1px dashed #cccccc;
+				display: none;
+			}
+
+			ul>li>a {
+				float: right;
+			}
+		</style>
+		<div class="box" id="weibo">
+			<span>微博：</span>
+			<textarea class="txt" cols="30" rows="10"></textarea>
+			<button class="btn">发布</button>
+			<ul></ul>
+		</div>
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<script>
+			$(() => {
+				$('.btn').on('click', () => {
+					var txt = $('.txt').val().replace(/<[^<>]+>/g, '').trim();
+					if (txt.length > 0) {
+						$('ul').prepend('<li>' + txt + '<a href="javascript:;">撤回</a></li>');
+						$('ul>li:first').slideDown('1000');
+					}
+					$('.txt').val('');
+				});
+				$('ul').on('click', 'a', (e) => {
+					$(e.target).parent().slideUp('1000', () => {
+						$(e.target).parent().remove();
+					});
+				});
+			});
+		</script>
+	</body>
+</html>
