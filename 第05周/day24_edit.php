@@ -43,6 +43,56 @@ while ($row=mysqli_fetch_assoc($res)) {
 }
 mysqli_close($con);
 ?>
-		<link rel="stylesheet" href="./css/form.css">
+		<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	background: #ccc;
+}
+h1,h2,h3,h4,h5,h6 {
+	text-align: center;
+}
+form {
+	width: 400px;
+	margin: 50px auto;
+	padding: 20px;
+	border: 1px solid #eee;
+	border-radius: 10px;
+	background: #fff;
+}
+input[type='text'],
+input[type='select'],
+input[type='password'],
+input[type='submit'],
+input[type='password'],
+input[type='file'],
+select {
+	width: 100%;
+	display: block;
+	height: 24px;
+	margin-bottom: 15px;
+	border-radius: 3px;
+	border: 1px solid #aaa;
+}
+input[type='submit'] {
+	height: 40px;
+	background: rgb(209, 92, 92);
+	border: none;
+	color: #fff;
+	font-size: 24px;
+}
+input[type='radio'],
+input[type='checkbox'] {
+	height: 20px;
+	width: 20px;
+	/* display: inline; */
+	margin: 10px;
+}
+input[type='file'] {
+	border: none;
+}
+</style>
 	</body>
 </html>
