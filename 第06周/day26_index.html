@@ -53,6 +53,77 @@
 		<!-- 外部脚本与类库 -->
 		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script src="./js/index.js"></script>
+		<script>
+			$(() => {
+				var func = (data) => {
+					if (JSON.parse(data).code == 200) {
+						$.each(JSON.parse(data).data, (k, v) => {
+							var tr = $('<tr></tr>');
+							var td1 = $('<td>' + v.Id + '</td>');
+							var td2 = $('<td>' + v.bookname + '</td>');
+							var td3 = $('<td>' + v.author + '</td>');
+							var td4 = $('<td>' + v.publisher + '</td>');
+							var td5 = $('<td></td>');
+							var a1 = $('<a href="#" class="del">删除 </a>');
+							var a2 = $(
+								'<a href="#" class="edit" data-toggle="tooltip" data-placement="right" data-title="请在 添加按钮前 填写信息">更换</a>'
+							);
+							td5.append(a1, a2);
+							tr.append([td1, td2, td3, td4, td5]);
+							$('#tb').append(tr);
+							$("[data-toggle='tooltip']").tooltip();
+						});
+					}
+				}
+				$.get('get.php', (data) => {
+					func(data);
+				});
+				$('#btnAdd').on('click', () => {
+					var iptBookname = $('#iptBookname').val();
+					var iptAuthor = $('#iptAuthor').val();
+					var iptPublisher = $('#iptPublisher').val();
+					$.post('add.php', {
+						'bookname': iptBookname,
+						'author': iptAuthor,
+						'publisher': iptPublisher
+					}, (data) => {
+						$('#tb').empty();
+						func(data);
+					});
+					$('#iptBookname').val('');
+					$('#iptAuthor').val('');
+					$('#iptPublisher').val('');
+				});
+				$('#tb').on('click', '.del', (e) => {
+					e.preventDefault();
+					var Id = $(e.target).parent().siblings('td:eq(0)').text();
+					$.get('del.php', {
+						'id': Id
+					}, (data) => {
+						$('#tb').empty();
+						func(data);
+					});
+				});
+				$('#tb').on('click', '.edit', (e) => {
+					e.preventDefault();
+					var Id = $(e.target).parent().siblings('td:eq(0)').text();
+					var iptBookname = $('#iptBookname').val();
+					var iptAuthor = $('#iptAuthor').val();
+					var iptPublisher = $('#iptPublisher').val();
+					$.post('add.php', {
+						'id': Id,
+						'bookname': iptBookname,
+						'author': iptAuthor,
+						'publisher': iptPublisher
+					}, (data) => {
+						$('#tb').empty();
+						func(data);
+					});
+					$('#iptBookname').val('');
+					$('#iptAuthor').val('');
+					$('#iptPublisher').val('');
+				});
+			});
+		</script>
 	</body>
 </html>
