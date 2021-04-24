@@ -58,6 +58,7 @@
 			$(() => {
 				var func = (data) => {
 					if (JSON.parse(data).code == 200) {
+						$('#tb').empty();
 						$.each(JSON.parse(data).data, (k, v) => {
 							var tr = $('<tr></tr>');
 							var td1 = $('<td>' + v.Id + '</td>');
@@ -88,7 +89,6 @@
 						'author': iptAuthor,
 						'publisher': iptPublisher
 					}, (data) => {
-						$('#tb').empty();
 						func(data);
 					});
 					$('#iptBookname').val('');
@@ -101,7 +101,6 @@
 					$.get('del.php', {
 						'id': Id
 					}, (data) => {
-						$('#tb').empty();
 						func(data);
 					});
 				});
@@ -117,7 +116,6 @@
 						'author': iptAuthor,
 						'publisher': iptPublisher
 					}, (data) => {
-						$('#tb').empty();
 						func(data);
 					});
 					$('#iptBookname').val('');
