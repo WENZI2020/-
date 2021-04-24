@@ -1,5 +1,5 @@
 <?php
-include('./config.php');
+include_once('./config.php');
 $id=$_GET['id'];
 $res=@mysqli_query($con, "delete from book where Id='{$id}'");
 if (!$res) {
@@ -7,10 +7,8 @@ if (!$res) {
     exit();
 }
 if (mysqli_affected_rows($con)!=-1) {
-    mysqli_close($con);
-    require('./get.php');
+    include('./get.php');
 } else {
-    require('./api.php');
     echo Api::json(400, 'error');
     mysqli_close($con);
 }
