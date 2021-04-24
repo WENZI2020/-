@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+	</head>
+	<body>
+		<!-- 内部叠层样式表 -->
+		<style>
+			.news-item {
+			  display: flex;
+			  border: 1px solid #eee;
+			  padding: 10px;
+			  margin-bottom: 5px;
+			}
+			.thumb {
+			  display: block;
+			  width: 230px;
+			  height: 140px;
+			  background-color: #ccc;
+			  margin-right: 10px;
+			}
+			.right-box {
+			  display: flex;
+			  flex-direction: column;
+			  justify-content: space-between;
+			  font-size: 12px;
+			  flex: 1;
+			}
+			.title {
+			  font-size: 20px;
+			  font-weight: normal;
+			}
+			.tags span {
+			  display: block;
+			  float: left;
+			  background-color: #F0F0F0;
+			  line-height: 20px;
+			  padding: 0 10px;
+			  border-radius: 10px;
+			  margin-right: 8px;
+			}
+			.footer {
+			  display: flex;
+			  justify-content: space-between;
+			}
+		</style>
+        <!-- 内外脚本与类库 -->
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/art-template/4.13.2/lib/template-web.min.js"></script>
+		<script>
+			$(() => {
+				$.get('./news.php', (data) => {
+					console.log(JSON.parse(data));
+					$('#app').html(template('template', JSON.parse(data)));
+				});
+			});
+		</script>
+        <!-- 模板声明式渲染 -->
+		<script id="template" type="text/html">
+			<div id="news-list">
+				{{each data}}
+				<div class="news-item">
+					<img class="thumb" src="http://www.liulongbin.top:3006{{$value.img}}" alt="" />
+					<div class="right-box">
+						<h1 class="title">{{$value.title}}</h1>
+						<div class="tags">
+							<span>{{$value.tags.split(',')[0]}}</span>
+							<span>{{$value.tags.split(',')[1]}}</span>
+							<span>{{$value.tags.split(',')[2]}}</span>
+						</div>
+						<div class="footer">
+							<div>
+								<span>{{$value.source}}</span>&nbsp;&nbsp;
+								<span>{{$value.time.replace('T',' ').replace('.000Z','')}}</span>
+							</div>
+							<span>评论数：{{$value.cmtcount}}</span>
+						</div>
+					</div>
+				</div>
+				{{/each}}
+			</div>
+		</script>
+        <!-- 页面的主体部分 -->
+		<div id="app"></div>
+	</body>
+</html>
