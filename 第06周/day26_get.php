@@ -1,6 +1,5 @@
 <?php
-include('./config.php');
-include('./api.php');
+include_once('./config.php');
 $res=@mysqli_query($con, "select * from book");
 if (!$res) {
     echo "<script>alert('查询记录失败')</script>";
