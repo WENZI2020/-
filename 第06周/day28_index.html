@@ -1,0 +1,82 @@
+<!DOCTYPE html><!-- 告诉浏览器，这个文档请以HTML的方式来解析 -->
+<html lang="zh-CN">
+	<!-- HTML文件的根标签 -->
+	<head>
+		<!-- HTML的头标签，头标签主要负责设置一些内容 -->
+		<!-- meta标签 自动刷新页面，或者自动跳转页面 -->
+		<link rel="icon" href="" /><!-- logo图标 -->
+		<meta name="keywords" content="标题" /><!-- 关键词 -->
+		<meta name="description" content="详情" /><!-- 描述信息，会出现在搜索页面 -->
+		<meta name="viewport" content="" /><!-- 响应式窗口适配 -->
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" /><!-- 浏览器兼容性 -->
+		<meta charset="utf-8" /><!-- 设置页面的字符编码 -->
+		<base /><!-- 整体链接状态 -->
+		<title></title><!-- 设置页面的标题名称 -->
+	</head>
+	<body style="padding: 15px;">
+		<!-- 外部叠层样式表 -->
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<!-- 外部脚本与类库 -->
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/art-template/4.13.2/lib/template-web.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script>
+$(() => {
+	template.defaults.imports.dtFormat = (timestamp) => {
+		var dt = new Date(timestamp * 1000);
+		var y = dt.getFullYear();
+		var mm = dt.getMonth() + 1;
+		var d = dt.getDate();
+		var h = dt.getHours();
+		var m = dt.getMinutes();
+		var s = dt.getSeconds();
+		var add0 = (a) => {
+			return a < 10 ? '0' + a : a;
+		}
+		return y + '-' + add0(mm) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(m) + ':' + add0(s);
+		// 注意，过滤器最后一定要 return 一个值
+	}
+	$.get('./get.php', (data) => {
+		if (JSON.parse(data).code == 200) {
+			$('#app').html(template('template', JSON.parse(data)));
+		}
+	});
+	$('#formAddCmt').on('submit', () => {
+		$.post('./add.php', $('#formAddCmt').serialize(), (data) => {
+			if (JSON.parse(data).code == 200) {
+				$('#cmt-list').empty();
+				$('#app').html(template('template', JSON.parse(data)));
+			}
+		});
+		$('#formAddCmt').get(0).reset();
+		return false;
+	});
+});
+        </script>
+		<!-- 模板声明式渲染 -->
+		<script id="template" type="text/html">
+			<ul class="list-group" id="cmt-list">
+				{{each data}}
+				<li class="list-group-item"><span class="badge"
+						style="background-color: #F0AD4E;">评论时间：{{$value.date|dtFormat}}</span><span class="badge"
+						style="background-color: #5BC0DE;">评论人：{{$value.username}}</span>{{$index+1}}.{{$value.content}}</li>
+				{{/each}}
+			</ul>
+		</script>
+		<!-- 评论面板 -->
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">图书管理后台</h3>
+			</div>
+			<form class="panel-body lead" id="formAddCmt">
+				<div>评论人：</div>
+				<input type="text" class="form-control" name="username" autocomplete="off">
+				<div>评论内容：</div>
+				<textarea class="form-control" name="content" style="resize: none;"></textarea>
+				<button type="submit" class="btn btn-primary">发表评论</button>
+			</form>
+		</div>
+		<!-- 评论列表 -->
+		<div id="app"></div>
+	</body>
+</html>
