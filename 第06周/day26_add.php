@@ -1,5 +1,5 @@
 <?php
-include('./config.php');
+include_once('./config.php');
 $bookname=trim(preg_replace('/<[^<>]+>/', '', $_POST['bookname']));
 $author=trim(preg_replace('/<[^<>]+>/', '', $_POST['author']));
 $publisher=trim(preg_replace('/<[^<>]+>/', '', $_POST['publisher']));
@@ -13,10 +13,8 @@ if (!$res) {
     exit();
 }
 if (mysqli_affected_rows($con)!=-1) {
-    mysqli_close($con);
-    require('./get.php');
+    include('./get.php');
 } else {
-    require('./api.php');
     echo Api::json(400, 'error');
     mysqli_close($con);
 }
