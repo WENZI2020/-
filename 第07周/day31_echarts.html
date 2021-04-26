@@ -1,0 +1,122 @@
+<!DOCTYPE html><!-- 告诉浏览器，这个文档请以HTML的方式来解析 -->
+<html lang="zh-CN">
+	<!-- HTML文件的根标签 -->
+	<head>
+		<!-- HTML的头标签，头标签主要负责设置一些内容 -->
+		<!-- meta标签 自动刷新页面，或者自动跳转页面 -->
+		<link rel="icon" href="" />
+		<meta name="keywords" content="标题" /><!-- 关键词 -->
+		<meta name="description" content="详情" /><!-- 描述信息，会出现在搜索页面 -->
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no" /><!-- 响应式视图布局 -->
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" /><!-- 浏览器兼容性 -->
+		<meta charset="utf-8" /><!-- 设置页面的字符编码 -->
+		<base /><!-- 整体链接状态 -->
+		<title></title><!-- 设置页面的标题名称 -->
+	</head>
+	<body>
+		<!-- 外部叠层样式表 -->
+		<!-- 外部脚本与类库 -->
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+		<script src="https://www.runoob.com/static/js/wonderland.js"></script>
+		<script>
+			$(() => {
+				echarts.init($('#app').get(0), 'wonderland').setOption({
+					title: {
+						text: '百家姓',
+						subtext: '杭州四姓18家'
+					},
+					legend: {
+						type: 'plain',
+						data: [{
+							name: '日间休息',
+							icon: 'rect'
+						}, {
+							name: '夜间休息',
+							icon: 'diamond'
+						}]
+					},
+					toolbox: {
+						feature: {
+							restore: {},
+							magicType: {
+								type: ['bar', 'line']
+							},
+							saveAsImage: {}
+						}
+					},
+					tooltip: {},
+					dataZoom: {},
+					series: [{
+						name: '日间休息',
+						type: 'bar',
+						label: {
+							show: true
+						},
+						showBackground: true,
+						data: [49, 94, 63, 87, 13, 25, 33, 58],
+						markPoint: {
+							data: [{
+									name: '最小值',
+									type: 'min'
+								},
+								{
+									name: '最大值',
+									type: 'max'
+								}
+							]
+						},
+						markLine: {
+							data: [{
+								name: '平均值',
+								type: 'average'
+							}]
+						}
+					}, {
+						name: '夜间休息',
+						type: 'bar',
+						label: {
+							show: true
+						},
+						showBackground: true,
+						data: [72, 13, 81, 94, 58, 63, 49, 33],
+						markPoint: {
+							data: [{
+									name: '最小值',
+									type: 'min'
+								},
+								{
+									name: '最大值',
+									type: 'max'
+								}
+							]
+						},
+						markLine: {
+							data: [{
+								name: '平均值',
+								type: 'average'
+							}]
+						}
+					}],
+					xAxis: {
+						name: '姓氏',
+						type: 'category',
+						data: ['张三', '李四', '王五', '闰土', '茅台', '二妞', '小明', '大强']
+					},
+					yAxis: {
+						name: '姓数',
+						type: 'value',
+						axisPointer: {
+							handle: {
+								show: true
+							}
+						}
+					},
+
+				});
+			});
+		</script>
+		<!-- 页面的主体部分 -->
+		<div id="app" style="margin:0 auto;width:100%;height:100vh;"></div>
+	</body>
+</html>
