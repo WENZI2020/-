@@ -1,0 +1,188 @@
+<!DOCTYPE html><!-- 告诉浏览器，这个文档请以HTML的方式来解析 -->
+<html lang="zh-CN">
+	<!-- HTML文件的根标签 -->
+	<head>
+		<!-- HTML的头标签，头标签主要负责设置一些内容 -->
+		<!-- meta标签 自动刷新页面，或者自动跳转页面 -->
+		<link rel="icon" href="" /><!-- logo图标 -->
+		<meta name="keywords" content="标题" /><!-- 关键词 -->
+		<meta name="description" content="详情" /><!-- 描述信息，会出现在搜索页面 -->
+		<meta name="viewport" content="" /><!-- 响应式窗口适配 -->
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" /><!-- 浏览器兼容性 -->
+		<meta charset="utf-8" /><!-- 设置页面的字符编码 -->
+		<base /><!-- 整体链接状态 -->
+		<title></title><!-- 设置页面的标题名称 -->
+	</head>
+	<body>
+		<!-- 外部叠层样式表 -->
+		<style type="text/css">
+			html,
+			body {
+				margin: 0 auto;
+				padding: 0;
+				width: 100%;
+			}
+
+			.grid {
+				width: 70%;
+				margin: 0 auto;
+				text-align: center;
+			}
+
+			.grid table {
+				width: 100%;
+				border-collapse: collapse;
+			}
+
+			.grid th {
+				background: orange;
+			}
+
+			.grid th,
+			.grid td {
+				border: 1px dashed orange;
+				height: 35px;
+				line-height: 35px;
+			}
+
+			.book {
+				margin-bottom: 20px;
+			}
+
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+		<!-- 外部脚本与类库 -->
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<script>
+			$(() => {
+				new Vue({
+					el: '#app',
+					data: {
+						id: '',
+						name: '',
+						flag: false,
+						books: [{
+							id: 1,
+							name: '三国演义',
+							date: 2525609975000
+						}, {
+							id: 2,
+							name: '水浒传',
+							date: 2525609975000
+						}, {
+							id: 3,
+							name: '红楼梦',
+							date: 2525609975000
+						}, {
+							id: 4,
+							name: '西游记',
+							date: 2525609975000
+						}]
+					},
+					methods: {
+						add() {
+							if (this.flag) {
+								this.books = this.books.map((v, i, arr) => {
+									if (v.id == this.id) {
+										return {
+											id: v.id,
+											name: this.name,
+											date: (new Date()).getTime()
+										};
+									} else {
+										return v;
+									}
+								});
+								this.flag = false;
+							} else {
+								this.books = this.books.concat({
+									id: this.id,
+									name: this.name,
+									date: (new Date()).getTime()
+								});
+							}
+							this.id = '';
+							this.name = '';
+						},
+						edit(id) {
+							var book = this.books.find((v, i, arr) => {
+								return v.id == id;
+							});
+							this.id = book.id;
+							this.name = book.name;
+							this.flag = true;
+						},
+						del(id) {
+							this.books = this.books.filter((v, i, arr) => {
+								return v.id != id;
+							});
+						}
+					},
+					filters: {
+						dtFormat: (date) => {
+							date = new Date(date);
+							var arr = [
+								date.getFullYear() + '-',
+								date.getMonth() + 1 + '-',
+								date.getDate() + ' ',
+								date.getHours() + ':',
+								date.getMinutes() + ':',
+								date.getSeconds() + ' '
+							];
+							var add0 = (a) => {
+								return a.length < 3 ? '0' + a : a;
+							}
+							var res = arr.reduce((sum, v, i, arr) => {
+								return sum + add0(v);
+							}, '');
+							return res.trim();
+
+						}
+					},
+					watch: {},
+					computed: {
+						total: function() {
+							return this.books.length;
+						}
+					}
+				});
+			});
+		</script>
+		<!-- 页面主体部分 -->
+		<div id="app" class="grid">
+			<h1 v-cloak>图书管理系统 总数{{total}}</h1>
+			<div class="book">
+				<label for="id">编号:</label>
+				<input type="text" id="id" v-model.trim="id" :disabled="flag">
+				<label for="name">名称:</label>
+				<input type="text" id="name" v-model.trim="name">
+				<button @click="add">提交</button>
+			</div>
+			<table>
+				<thead>
+					<tr>
+						<th>编号</th>
+						<th>名称</th>
+						<th>时间</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="v,i in books" :key="i" v-cloak>
+						<td>{{v.id}}</td>
+						<td>{{v.name}}</td>
+						<td>{{v.date|dtFormat}}</td>
+						<td>
+							<a href="javascript:;" @click.prevent="edit(v.id)">修改</a>
+							<span>|</span>
+							<a href="javascript:;" @click.prevent="del(v.id)">删除</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
